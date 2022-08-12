@@ -1,22 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 import GeneAdd from "../components/gene/GeneAdd";
 import GeneList from "../components/gene/GeneList";
 import GeneManager from "../views/GeneManager";
 import Search from "../components/Search";
+import Browser from "../components/Browser";
 
 Vue.use(Router)
 
 const routes = [
   {
     path: '/',
-    redirect: '/index'
+    redirect: '/home'
   },
   {
-    path: '/index',
-    name: 'index',
-    component: ()=>import('../components/Index')
+    path: '/home',
+    component: ()=>import('../components/Home')
   },
   {
     path: '/geneAdd',
@@ -34,6 +33,10 @@ const routes = [
   {
     path: '/search',
     component: Search
+  },
+  {
+    path: '/browser',
+    component: Browser
   }
 ]
 

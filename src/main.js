@@ -10,7 +10,9 @@ import api_ from './api'
 
 // 使用element ui
 Vue.use(ElementUI)
+
 Vue.config.productionTip = false
+
 Vue.prototype.$http = axios
 Vue.prototype.api = api_
 /* eslint-disable no-new */
