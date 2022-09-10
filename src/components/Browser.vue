@@ -8,58 +8,26 @@
         <el-table
           :data="genes"
           style="width: 100%">
-          <el-table-column type="expand">
-            <template slot-scope="props">
-              <el-form label-position="center" inline class="demo-table-expand">
-                <el-form-item label="Symbol : ">
-                  <span>{{ props.row.symbol }}</span>
-                </el-form-item>
-                <el-form-item label="EntrezGeneId : ">
-                  <span>{{ props.row.entrezGeneId }}</span>
-                </el-form-item>
-                <el-form-item label="Species : ">
-                  <span>{{ props.row.species }}</span>
-                </el-form-item>
-                <el-form-item label="Description : ">
-                  <span>{{ props.row.description }}</span>
-                </el-form-item>
-                <el-form-item label="Reference : ">
-                  <span>{{ props.row.reference }}</span>
-                </el-form-item>
-                <el-form-item label="Why : ">
-                  <span>{{ props.row.why }}</span>
-                </el-form-item>
-                <el-form-item label="Source : ">
-                  <span>{{ props.row.source }}</span>
-                </el-form-item>
-                <el-form-item label="Validated : ">
-                  <span>{{ props.row.validated }}</span>
-                </el-form-item>
-              </el-form>
+          <el-table-column
+            label="ID"
+            width="300">
+            <template slot-scope="scope">
+              <span style="margin-left: 10px">{{ scope.$index + 1 }}</span>
             </template>
           </el-table-column>
           <el-table-column
-            type="index">
-          </el-table-column>
-          <el-table-column
             label="Symbol"
-            prop="symbol">
+            width="300">
+            <template slot-scope="scope">
+              <span style="margin-left: 10px">{{ scope.row }}</span>
+            </template>
           </el-table-column>
-          <el-table-column
-            label="Species"
-            prop="species">
-          </el-table-column>
-          <el-table-column
-            label="Validated"
-            prop="validated">
-          </el-table-column>
-          <el-table-column label="Option">
+          <el-table-column label="option">
             <template slot-scope="scope">
               <el-button
-                size="mini"
                 type="primary"
-                @click="getMore(scope.$index, scope.row.id)">more
-              </el-button>
+                size="small"
+                @click="getMore(scope.$index, scope.row)">more</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -77,6 +45,27 @@
         :total="total">
       </el-pagination>
     </el-card>
+    <el-dialog
+      title="Info"
+      :visible.sync="dialogVisible"
+      width="60%"
+      >
+      <el-card class="result" v-for="geneInfo in geneInfos" :key="geneInfo.gene">
+        <div>
+          <el-descriptions title="Gene Info" column="1" border direction="vertical">
+            <el-descriptions-item label="symbol"><el-tag size="small">{{geneInfo.symbol}}</el-tag></el-descriptions-item>
+            <el-descriptions-item label="species"><el-tag size="small">{{geneInfo.species}}</el-tag></el-descriptions-item>
+            <el-descriptions-item label="reference">{{geneInfo.reference}}</el-descriptions-item>
+            <el-descriptions-item label="validated"><el-tag size="small">{{geneInfo.validated}}</el-tag></el-descriptions-item>
+            <el-descriptions-item label="why">{{geneInfo.why}}</el-descriptions-item>
+            <el-descriptions-item label="pmid">{{geneInfo.pmid}}</el-descriptions-item>
+          </el-descriptions>
+        </div>
+      </el-card>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">cancel</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -85,18 +74,21 @@ export default {
   name: "Broswer",
   data() {
     return {
-      genes: [],
+      genes: [
+        'APOE', 'FOFX'
+      ],
+      gene: {},
+      geneInfos: [],
       size: 10,
       pageNow: 1,
       total: 100,
+      dialogVisible: false
     }
   },
   methods: {
-    getMore(index, id) {
-      this.$notify.info({
-        title: '消息',
-        message: "index = " + index + "id = " + id
-      });
+    getMore(index, gene) {
+      this.gene = gene;
+      this.GeneSearch();
     },
     findPage(page) {
       this.pageNow = page;
@@ -109,10 +101,24 @@ export default {
     findAllGenes(page, size) {
       page = page ? page : this.pageNow;
       size = size ? size : this.size;
-      this.$http.get(this.api.reqURL + "/index/gene" + "/" + page + "/" + size).then(res => {
+      this.$http.get(this.api.reqURL + "/gene" + "/" + page + "/" + size).then(res => {
         this.genes = res.data.data;
         this.total = res.data.total;
       })
+    },
+    GeneSearch() {
+      this.empShow = false;
+      this.$http.get(this.api.reqURL + "/gene" + "/search" + '/' + this.gene).then(res => {
+        if (res.data.ok) {
+          this.geneInfos = res.data.data;
+          this.geneAgeLink = 'http://genomics.senescence.info/genes/entry.php?hgnc=' + res.data.data.symbol;
+          this.resShow = true;
+          this.dialogVisible = true;
+        } else {
+          alert("can not find");
+          this.empShow = true;
+        }
+      });
     },
   },
   created() {
@@ -122,5 +128,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .result {
+    margin-top: 50px;
+  }
 </style>

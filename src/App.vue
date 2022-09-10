@@ -1,27 +1,22 @@
 <template>
   <div id="app">
-    <el-container>
-      <el-header>
-        <el-row>
-          <el-col span="18" offset="3">
-            <!--导航菜单-->
+              <!--导航菜单-->
             <el-menu :default-active="activeIndex"
-                     mode="horizontal" @select="handleSelect"
-                     background-color="#EFFBF1"
-                     text-color="#333745"
-                     active-text-color="#E63462"
+                     mode="horizontal"
+                     @select="handleSelect"
+                     class="el-menu-demo"
+                     background-color="#333745"
+                     text-color="#FFFFFF"
+                     active-text-color="#F56C6C"
                      id="elMenu">
-              <el-menu-item index="/home">Home</el-menu-item>
+              <el-menu-item index="/home" style="margin-left:500px">Home</el-menu-item>
               <el-menu-item index="/browser">Browser</el-menu-item>
               <el-menu-item index="/search">Search</el-menu-item>
-              <el-menu-item index="/download">Download</el-menu-item>
-              <el-menu-item index="/help">Help</el-menu-item>
-              <el-menu-item index="/geneManager">Manage</el-menu-item>
+              <el-menu-item index="/ana">Analysis</el-menu-item>
+              <el-menu-item index="/contact">Contact us</el-menu-item>
             </el-menu>
-          </el-col>
-        </el-row>
-      </el-header>
-      <el-main id="mainContent" style="margin-top: 40px">
+    <el-container style="padding:0;">
+      <el-main id="mainContent" style="margin-top: 50px;padding:0;">
         <router-view/>
       </el-main>
     </el-container>
@@ -39,7 +34,6 @@ export default {
   methods: {
     // 导航菜单跳转
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
       this.$router.push(key)
     },
   }
@@ -48,18 +42,16 @@ export default {
 
 <style>
 
-body{
-  margin: 0px;
-  background-color: #EFFBF1;
-}
-
-#elMenu{
+#mainContent {
+  max-width: 1300px;
+  min-width: 600px;
   margin: auto;
 }
 
-#mainContent {
-  margin-left:  300px;
-  margin-right: 300px;
+body{
+  padding: 0px;
+  margin: 0px;
 }
+
 
 </style>

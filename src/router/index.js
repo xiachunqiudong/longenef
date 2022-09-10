@@ -5,6 +5,8 @@ import GeneList from "../components/gene/GeneList";
 import GeneManager from "../views/GeneManager";
 import Search from "../components/Search";
 import Browser from "../components/Browser";
+import Ana from "../components/Ana"
+import Contact from "../components/Contact";
 
 Vue.use(Router)
 
@@ -37,6 +39,14 @@ const routes = [
   {
     path: '/browser',
     component: Browser
+  },
+  {
+    path: '/ana',
+    component: Ana
+  },
+  {
+    path: '/contact',
+    component: Contact
   }
 ]
 
