@@ -24,28 +24,21 @@
         </div>
       </div>
       <el-empty :image-size="200" description="wait for your search" v-show="empShow"></el-empty>
-      <el-card class="result" v-for="geneInfo in geneInfos" :key="geneInfo.gene">
-        <div>
-          <el-descriptions title="Gene Info" column="1" border>
-            <el-descriptions-item label="symbol"><el-tag size="small">{{geneInfo.symbol}}</el-tag></el-descriptions-item>
-            <el-descriptions-item label="species"><el-tag size="small">{{geneInfo.species}}</el-tag></el-descriptions-item>
-            <el-descriptions-item label="reference">{{geneInfo.reference}}</el-descriptions-item>
-            <el-descriptions-item label="validated"><el-tag size="small">{{geneInfo.validated}}</el-tag></el-descriptions-item>
-            <el-descriptions-item label="why">{{geneInfo.why}}</el-descriptions-item>
-            <el-descriptions-item label="pmid">{{geneInfo.pmid}}</el-descriptions-item>
-          </el-descriptions>
-        </div>
-      </el-card>
+      <Result :geneInfos="geneInfos"></Result>
     </el-card>
   </div>
 </template>
 
 <script>
+  import Result from "./gene/Result";
   export default {
     name: "Search",
+    components: {
+      Result
+    },
     data() {
       return {
-        // 模糊搜索
+        // 模糊搜索7
         allGenes: [],
         options: [],
         gene: '',
@@ -110,7 +103,4 @@
     margin: auto;
   }
 
-  .result {
-    margin-top: 50px;
-  }
 </style>

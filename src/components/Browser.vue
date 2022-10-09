@@ -50,18 +50,7 @@
       :visible.sync="dialogVisible"
       width="60%"
       >
-      <el-card class="result" v-for="geneInfo in geneInfos" :key="geneInfo.gene">
-        <div>
-          <el-descriptions title="Gene Info" column="1" border direction="vertical">
-            <el-descriptions-item label="symbol"><el-tag size="small">{{geneInfo.symbol}}</el-tag></el-descriptions-item>
-            <el-descriptions-item label="species"><el-tag size="small">{{geneInfo.species}}</el-tag></el-descriptions-item>
-            <el-descriptions-item label="reference">{{geneInfo.reference}}</el-descriptions-item>
-            <el-descriptions-item label="validated"><el-tag size="small">{{geneInfo.validated}}</el-tag></el-descriptions-item>
-            <el-descriptions-item label="why">{{geneInfo.why}}</el-descriptions-item>
-            <el-descriptions-item label="pmid">{{geneInfo.pmid}}</el-descriptions-item>
-          </el-descriptions>
-        </div>
-      </el-card>
+      <Result :geneInfos="geneInfos"></Result>
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">cancel</el-button>
   </span>
@@ -70,8 +59,10 @@
 </template>
 
 <script>
+import Result from "./gene/Result";
 export default {
   name: "Broswer",
+  components: {Result},
   data() {
     return {
       genes: [

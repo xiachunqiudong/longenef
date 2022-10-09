@@ -1,4 +1,5 @@
-const reqURL = 'http://localhost:8848'
+const reqURL = 'http://124.223.81.224:8868';
+const dzxURL = 'http://localhost:8800/dzx';
 const cancers = [
     'ACC',
     'BLCA',
@@ -34,6 +35,7 @@ const cancers = [
 
 export default {
   reqURL,
+  dzxURL,
   cancers,
 }
 
