@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="result" v-for="geneInfo in geneInfos">
+    <el-card class="result" v-for="geneInfo in geneInfos" :key="geneInfo.symbol">
       <div>
         <el-descriptions title="Gene Info" column="1" border direction="vertical">
           <el-descriptions-item label="Symbol">
@@ -11,26 +11,32 @@
             </el-link>
           </el-descriptions-item>
           <!--物种-->
-          <el-descriptions-item label="Species"><el-tag size="small">
-            {{geneInfo.species}}</el-tag>
+          <el-descriptions-item label="Species">
+            <el-tag size="small">
+              {{geneInfo.species}}
+            </el-tag>
+          </el-descriptions-item>
+          <!--snp-->
+          <el-descriptions-item label="Snp Sites">
+            {{geneInfo.snpSite}}
           </el-descriptions-item>
           <!--引用-->
-          <el-descriptions-item v-if="geneInfo.reference !== null && geneInfo.reference.length !== 0 && geneInfo.source !== 'genageHuman' " label="Reference">
-            {{geneInfo.reference}}
+          <el-descriptions-item label="Reference">
+            {{geneInfo.title}}
           </el-descriptions-item>
-          <!--来源-->
-          <el-descriptions-item label="Source" v-if="geneInfo.source === 'genageHuman' ">
-            <el-link type="primary" :underline="false" :href="'https://genomics.senescence.info/genes/entry.php?hgnc=' + geneInfo.symbol ">{{geneInfo.source}}</el-link>
-          </el-descriptions-item>
-          <!--实验验证-->
-          <el-descriptions-item v-if="geneInfo.validated !== null && geneInfo.validated.length !== 0" label="Validated"><el-tag size="small">{{geneInfo.validated}}</el-tag></el-descriptions-item>
-          <!--描述-->
-          <el-descriptions-item v-if="geneInfo.why !== null && geneInfo.why.length !== 0" label="Description">{{geneInfo.why}}</el-descriptions-item>
           <!--对长寿影响-->
-          <el-descriptions-item v-if="geneInfo.inf !== null && geneInfo.inf.length !== 0" label="Longevity Influence">{{geneInfo.inf}}</el-descriptions-item>
+          <el-descriptions-item label="Longevity Influence">{{geneInfo.influence}}</el-descriptions-item>
+          <!--实验验证-->
+          <el-descriptions-item label="Validated">
+            <el-tag size="small">{{geneInfo.validated}}</el-tag>
+          </el-descriptions-item>
+          <!--描述-->
+          <el-descriptions-item label="Description">{{geneInfo.description}}</el-descriptions-item>
           <!--pmid-->
-          <el-descriptions-item v-if="geneInfo.source !== 'genageHuman'" label="PMID">
-            <el-link type="primary" :underline="false" :href="'https://pubmed.ncbi.nlm.nih.gov/' + geneInfo.pmid ">{{geneInfo.pmid}}</el-link>
+          <el-descriptions-item label="PMID">
+            <el-link type="primary" :underline="false" :href="'https://pubmed.ncbi.nlm.nih.gov/' + geneInfo.pmid ">
+              {{geneInfo.pmid}}
+            </el-link>
           </el-descriptions-item>
         </el-descriptions>
       </div>
@@ -39,17 +45,23 @@
 </template>
 
 <script>
-    export default {
-        name: "Result",
-        data() {
-          return {
-            pmid: 123,
-          }
-        },
-        props: {
-          geneInfos: [],
-        }
+  export default {
+    name: "Result",
+    data() {
+      return {
+        pmid: 123,
+        geneInfos: [],
+      }
+    },
+    methods: {
+      getGeneInfo(gene) {
+        this.empShow = false;
+        this.$http.get(this.api.xdlURL + "/long/geneinfo/" + gene).then(res => {
+          this.geneInfos = res.data;
+        });
+      },
     }
+  }
 </script>
 
 <style scoped>

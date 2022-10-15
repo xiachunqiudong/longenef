@@ -100,9 +100,3 @@
   }
 </script>
 
-<style scoped>
-  .chart {
-    border-style: groove;
-    border-color: #333745;
-  }
-</style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="box-card" shadow="never" style="border-style: solid; border-color: #333745; border-width: 2px">
+    <el-card class="box-card" shadow="never" style="border-style: solid; border-color: #D1E8FF; border-width: 2px">
       <div class="text item">
         <div style="text-align: center">
           <span style="font-size: 16px">Gene:&nbsp&nbsp</span>
@@ -18,13 +18,14 @@
             <el-option
               v-for="option in options"
               :label="option"
-              :value="option">
+              :value="option"
+              :key="option">
             </el-option>
           </el-select>
         </div>
       </div>
       <el-empty :image-size="200" description="wait for your search" v-show="empShow"></el-empty>
-      <Result :geneInfos="geneInfos"></Result>
+      <Result ref="result"></Result>
     </el-card>
   </div>
 </template>
@@ -43,27 +44,17 @@
         options: [],
         gene: '',
         // 搜索部分
-        resShow: false,
+        resShow: true,
         empShow: true,
         loading: false,
         // 搜索数据展示
         geneInfos: [],
-        geneAgeLink: '',
       }
     },
     methods: {
       GeneSearch() {
         this.empShow = false;
-        this.$http.get(this.api.reqURL + "/gene" + "/search" + '/' + this.gene).then(res => {
-          if (res.data.ok) {
-            this.geneInfos = res.data.data;
-            this.geneAgeLink = 'http://genomics.senescence.info/genes/entry.php?hgnc=' + res.data.data.symbol;
-            this.resShow = true;
-          } else {
-            alert("can not find");
-            this.empShow = true;
-          }
-        });
+        this.$refs.result.getGeneInfo(this.gene);
       },
       remoteMethod(query) {
         // 如果用户输入内容了，就发请求拿数据，远程搜索模糊查询
@@ -80,8 +71,8 @@
       }
     },
     mounted() {
-      this.$http.get(this.api.reqURL + '/gene/all').then(res => {
-        this.allGenes = res.data.data;
+      this.$http.get(this.api.xdlURL + '/long/gene/all').then(res => {
+        this.allGenes = res.data;
       })
     }
   }
@@ -100,6 +91,7 @@
 
   .box-card {
     width: 1000px;
+    height: auto;
     margin: auto;
   }
 

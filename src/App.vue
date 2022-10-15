@@ -46,6 +46,15 @@
         <router-view/>
       </el-main>
     </el-container>
+
+    <!--footer-->
+    <div id="footer">
+      <br>
+      <p style="color:#0056AB">Copyright © Guo Lab, School of Geographic and Biologic Information, Nanjing University
+        of Posts and Telecommunications, Nanjing, China.</p>
+      <p style="color:#0056AB">Liang Lab, College of Life Science, Nanjing Normal University, Nanjing, China</p>
+      <p style="color:#0056AB">© All right Reversed. ICP9036104</p>
+    </div>
   </div>
 </template>
 
@@ -82,6 +91,22 @@
 
   .nav-font {
     font-size: 20px;
+  }
+
+  .chart {
+    border-color: #D1E8FF;
+  }
+
+  .main-color {
+    background-color: #D1E8FF;
+  }
+
+  #footer {
+    height: 140px;
+    width: 100%;
+    margin-top: 150px;
+    background-color: #D1E8FF;
+    text-align: center;
   }
 
 </style>

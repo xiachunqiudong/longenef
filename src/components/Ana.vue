@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="box-card" style="border-color: #333745;border-width: 2px">
+    <el-card class="box-card" style="border-color: #D1E8FF;border-width: 2px">
       <div class="text item">
         <!--搜索表单-->
         <el-form :inline="true" :model="geneAndCancer" style="margin-top: 50px; margin-left: 20px;">
@@ -58,35 +58,16 @@
       logfcAndMut() {
         this.$http.post(this.api.reqURL + "/ana/general/logfcAndMut", this.geneAndCancer)
           .then(res => {
-            if (res.data.ok) {
-              this.logfcAndMutData = res.data.data;
-              this.mutInit();
-            } else {
-              this.resShow = true
-              this.$notify.error({
-                title: 'warning',
-                message: 'please check gene symbol!',
-                type: 'waring',
-                duration: 1000
-              });
-            }
+            this.logfcAndMutData = res.data.data;
+            this.mutInit();
           })
       },
+      // 拷贝数变异
       getCnvData() {
         this.$http.post(this.api.reqURL + "/ana/general/cnv", this.geneAndCancer)
           .then(res=>{
-            if (res.data.ok) {
-              this.cnvList = res.data.data;
-              this.cnvInit();
-            } else {
-              this.resShow = true
-              this.$notify.error({
-                title: 'warning',
-                message: 'please check gene symbol!',
-                type: 'waring',
-                duration: 1000
-              });
-            }
+            this.cnvList = res.data.data;
+            this.cnvInit();
           })
       },
       queryByGeneAndCancer() {
@@ -241,20 +222,16 @@
 </script>
 
 <style scoped>
-  .chart {
-    border-style: groove;
-    border-color: #333745;
-  }
 
   .chart-header {
     margin-top: 60px;
-    background-color: #333745;
+    background-color: #D1E8FF;
     text-align: center;
     height: 30px;
   }
 
   .chart-header-font {
-    color: #FFFFFF;
+    color: #0056AB;
     font-size: 20px;
   }
 </style>

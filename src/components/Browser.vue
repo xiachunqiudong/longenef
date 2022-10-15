@@ -22,7 +22,7 @@
               <span style="margin-left: 10px">{{ scope.row }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="option">
+          <el-table-column label="Option">
             <template slot-scope="scope">
               <el-button
                 type="primary"
@@ -50,7 +50,7 @@
       :visible.sync="dialogVisible"
       width="60%"
       >
-      <Result :geneInfos="geneInfos"></Result>
+      <Result ref="result"></Result>
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">cancel</el-button>
   </span>
@@ -68,8 +68,6 @@ export default {
       genes: [
         'APOE', 'FOFX'
       ],
-      gene: {},
-      geneInfos: [],
       size: 10,
       pageNow: 1,
       total: 100,
@@ -78,8 +76,8 @@ export default {
   },
   methods: {
     getMore(index, gene) {
-      this.gene = gene;
-      this.GeneSearch();
+      this.dialogVisible = true;
+      this.$refs.result.getGeneInfo(gene);
     },
     findPage(page) {
       this.pageNow = page;
@@ -92,28 +90,14 @@ export default {
     findAllGenes(page, size) {
       page = page ? page : this.pageNow;
       size = size ? size : this.size;
-      this.$http.get(this.api.reqURL + "/gene" + "/" + page + "/" + size).then(res => {
+      this.$http.get(this.api.xdlURL + "/long/gene/all" + "/" + page + "/" + size).then(res => {
         this.genes = res.data.data;
-        this.total = res.data.total;
+        this.total = res.data.counts;
       })
-    },
-    GeneSearch() {
-      this.empShow = false;
-      this.$http.get(this.api.reqURL + "/gene" + "/search" + '/' + this.gene).then(res => {
-        if (res.data.ok) {
-          this.geneInfos = res.data.data;
-          this.geneAgeLink = 'http://genomics.senescence.info/genes/entry.php?hgnc=' + res.data.data.symbol;
-          this.resShow = true;
-          this.dialogVisible = true;
-        } else {
-          alert("can not find");
-          this.empShow = true;
-        }
-      });
     },
   },
   created() {
-    this.findAllGenes()
+    this.findAllGenes();
   },
 }
 </script>

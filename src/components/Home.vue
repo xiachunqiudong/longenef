@@ -1,15 +1,17 @@
 <template>
   <div>
-    <div>
-      <el-carousel indicator-position="outside" height="500px">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <h3>
-            <el-image :src="src"></el-image>
-          </h3>
-        </el-carousel-item>
-      </el-carousel>
-      <div class="first-card-header">
-        <h1>LongevityGene-CancerDB</h1>
+    <!--轮播图-->
+    <el-carousel indicator-position="outside" height="500px">
+      <el-carousel-item v-for="item in 4" :key="item">
+        <h3>
+          <el-image :src="src"></el-image>
+        </h3>
+      </el-carousel-item>
+    </el-carousel>
+
+    <div style="margin-top: 50px">
+      <div class="first-card-header main-color">
+        <span class="first-font">LongevityGene-CancerDB</span>
       </div>
       <el-card class="first-card" shadow="never">
         <div class="text item">
@@ -44,9 +46,9 @@
       </el-card>
     </div>
 
-    <div>
+    <div style="margin-top: 50px">
       <div class="first-card-header">
-        <h1>Results</h1>
+        <span class="first-font">Results</span>
       </div>
       <el-card class="first-card" shadow="never">
         <div class="text item">
@@ -57,14 +59,6 @@
             :fit="scale-down"></el-image>
         </div>
       </el-card>
-    </div>
-
-    <!--footer-->
-    <div id="footer">
-      <p style="color:#FFFFFF;">Copyright © Guo Lab, School of Geographic and Biologic Information, Nanjing University
-        of Posts and Telecommunications, Nanjing, China.</p>
-      <p style="color:#FFFFFF">Liang Lab, College of Life Science, Nanjing Normal University, Nanjing, China</p>
-      <p style="color:#FFFFFF">© All right Reversed. ICP9036104</p>
     </div>
   </div>
 </template>
@@ -102,28 +96,20 @@
   /* 一级卡片*/
   .first-card {
     border-radius: 0;
-    border-width: 2px;
-    border-style: solid;
-    border-color: #333745;
+  }
+
+  .first-font {
+    color: #0056AB;
+    font-size: 24px;
   }
 
   .first-card-header {
+    background-color: #D1E8FF;
+    color: #333745;
     height: 34px;
-    background-color: #333745;
     text-align: center;
   }
 
-  h1 {
-    color: aliceblue;
-  }
-
-  #footer {
-    height: 100px;
-    width: 100%;
-    margin-top: 100px;
-    background-color: #333745;
-    text-align: center;
-  }
 
   /*轮播图*/
   .el-carousel__item h3 {
