@@ -50,7 +50,7 @@
       :visible.sync="dialogVisible"
       width="60%"
       >
-      <Result ref="result"></Result>
+      <Result ref="result" :gene="gene"></Result>
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">cancel</el-button>
   </span>
@@ -68,6 +68,7 @@ export default {
       genes: [
         'APOE', 'FOFX'
       ],
+      gene: '',
       size: 10,
       pageNow: 1,
       total: 100,
@@ -76,6 +77,7 @@ export default {
   },
   methods: {
     getMore(index, gene) {
+      this.gene = gene;
       this.dialogVisible = true;
       this.$refs.result.getGeneInfo(gene);
     },

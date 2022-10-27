@@ -53,13 +53,16 @@
         geneInfos: [],
       }
     },
+    props: ["gene"],
     methods: {
       getGeneInfo(gene) {
-        this.empShow = false;
         this.$http.get(this.api.xdlURL + "/long/geneinfo/" + gene).then(res => {
           this.geneInfos = res.data;
         });
       },
+    },
+    created() {
+      this.getGeneInfo(this.gene);
     }
   }
 </script>

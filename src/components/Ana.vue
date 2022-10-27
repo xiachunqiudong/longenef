@@ -3,19 +3,35 @@
     <el-card class="box-card" style="border-color: #D1E8FF;border-width: 2px">
       <div class="text item">
         <!--搜索表单-->
-        <el-form :inline="true" :model="geneAndCancer" style="margin-top: 50px; margin-left: 20px;">
-          <el-form-item label="Gene">
-            <el-input v-model="geneAndCancer.gene" placeholder="Gene"></el-input>
-          </el-form-item>
+        <div style="margin: 20px;">
+          <span style="font-size: 16px">Gene:&nbsp&nbsp</span>
+          <el-select
+            v-model="gene"
+            filterable
+            remote
+            placeholder="please enter gene symbol"
+            :remote-method="remoteMethod"
+            :loading="loading"
+            @change="queryByGeneAndCancer"
+          >
+            <!-- remote-method封装好的钩子函数。当用户在输入框中输入内容的时候，会触发这个函数的执行，
+            把输入框对应的值作为参数带给回调函数，loading的意思就是远程搜索的时候等待的时间，即：加载中-->
+            <el-option
+              v-for="option in options"
+              :label="option"
+              :value="option"
+              :key="option">
+            </el-option>
+          </el-select>
+        </div>
           <el-form-item>
             <el-button type="primary" @click="queryByGeneAndCancer">Search</el-button>
           </el-form-item>
-        </el-form>
         <el-divider></el-divider>
         <!--结果展示-->
-        <!--log2fc-->
-        <div class="chart-header"><span class="chart-header-font">Log2FC of Differential Analysis</span></div>
-        <Diff ref="diff"></Diff>
+        <!--diffR-->
+        <div class="chart-header"><span class="chart-header-font">mRNA Expression</span></div>
+        <DiffR ref="diffr"></DiffR>
         <!--mut-->
         <div class="chart-header"><span class="chart-header-font">Mutation Rate</span></div>
         <div style="width: auto;height: 600px" id="mut" class="chart"></div>
@@ -32,16 +48,19 @@
 
 <script>
 
-  import Diff from "./dzx/Diff";
   import Methy from "./dzx/Methy";
+  import DiffR from "./dzx/DiffR";
 
   export default {
     name: 'Ana',
     data() {
       return {
+        allGenes: [],
+        options: [],
         // gene and cancer
+        gene: 'APOE',
         geneAndCancer: {
-          gene: 'ADPGK',
+          gene: 'APOE',
           cancer: 'ACC',
         },
         cancers: this.api.cancers,
@@ -51,8 +70,8 @@
       };
     },
     components: {
+      DiffR,
       Methy,
-      Diff
     },
     methods: {
       logfcAndMut() {
@@ -61,6 +80,20 @@
             this.logfcAndMutData = res.data.data;
             this.mutInit();
           })
+      },
+      // 模糊搜索
+      remoteMethod(query) {
+        // 如果用户输入内容了，就发请求拿数据，远程搜索模糊查询
+        if (query !== "") {
+          this.loading = true; // 开始拿数据喽
+          this.options = this.allGenes.filter((item) => {
+            // 大于-1说明只要有就行，不论是不是开头也好，中间也好，或者结尾也好
+            return item.toLowerCase().indexOf(query.toLowerCase()) > -1
+          })
+          this.loading = false // 拿到数据喽
+        } else {
+          this.options = [];
+        }
       },
       // 拷贝数变异
       getCnvData() {
@@ -71,8 +104,8 @@
           })
       },
       queryByGeneAndCancer() {
-        this.$refs.diff.getDiffList(this.geneAndCancer.gene);
-        this.$refs.methy.getMethyByGene(this.geneAndCancer.gene);
+        this.$refs.diffr.getDiffPic(this.gene);
+        this.$refs.methy.getMethyByGene(this.gene);
         this.logfcAndMut();
         this.getCnvData();
       },
@@ -217,6 +250,10 @@
     },
     mounted() {
       this.queryByGeneAndCancer();
+      // 获取长寿基因列表
+      this.$http.get(this.api.xdlURL + '/long/gene/all').then(res => {
+        this.allGenes = res.data;
+      });
     }
   }
 </script>

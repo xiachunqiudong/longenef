@@ -2,7 +2,7 @@
   <div id="app">
     <!--logo-->
     <el-image
-      style="height: 90px"
+      style="height: 100px"
       :src="logo"
       fit="fit">
     </el-image>
@@ -16,11 +16,11 @@
              active-text-color="#F56C6C"
              background-color="#D1E8FF"
              id="elMenu">
-      <el-menu-item>
+<!--      <el-menu-item>
         <span style="font-size: 25px">LongevityGene-CancerDB</span>
-      </el-menu-item>
+      </el-menu-item>-->
       <!--Home-->
-      <el-menu-item index="/home" style="margin-left:150px">
+      <el-menu-item index="/home" style="margin-left:350px">
         <i class="el-icon-s-home"></i><span class="nav-font">Home</span>
       </el-menu-item>
       <!--Browser-->
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-  import logo from './assets/home/aegip.png'
+  import logo from './assets/logo.png'
   export default {
     name: 'App',
     data() {

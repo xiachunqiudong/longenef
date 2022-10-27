@@ -4,10 +4,10 @@
       style="width: 800px; height: 500px"
       :src="'data:image/png;base64,' + msg"
       fit="contain"></el-image>
-    <el-button @click="getPic">click</el-button>
+    <el-input v-model="gene"></el-input>
+    <el-button @click="getPic()">click</el-button>
     </div>
 </template>
-
 
 
 <script>
@@ -15,12 +15,12 @@
     name: "Rana",
     data() {
       return {
-        msg: 'hello',
+        gene: ''
       }
     },
     methods: {
       getPic() {
-        this.$http.get(this.api.rURL + "/ana").then(res=>{
+        this.$http.get(this.api.rURL + "/diffpic/" + this.gene).then(res=>{
           this.msg = res.data;
         })
       }

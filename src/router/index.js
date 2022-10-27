@@ -5,8 +5,7 @@ import Search from "../components/Search";
 import Browser from "../components/Browser";
 import Ana from "../components/Ana"
 import Contact from "../components/Contact";
-import Methylation from "../components/dzx/Methy";
-import Rana from "../components/Rana";
+
 
 Vue.use(Router)
 
@@ -39,10 +38,6 @@ const routes = [
     path: '/contact',
     component: Contact
   },
-  {
-    path: '/rana',
-    component: Rana
-  }
 ]
 
 const router = new Router({
