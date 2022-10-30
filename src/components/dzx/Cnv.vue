@@ -20,10 +20,10 @@
           :key="option">
         </el-option>
       </el-select>
-      <el-button type="primary" @click="getMethyByGene">Click</el-button>
+      <el-button type="primary" @click="getCnvData">Click</el-button>
     </div>
     <el-divider></el-divider>
-    <div style="width: auto;height: 600px" id="methy" class="chart"></div>
+    <div style="width: auto;height: 500px" id="cnv" class="chart"></div>
   </div>
 </template>
 
@@ -32,11 +32,11 @@
     name: "Methy",
     data() {
       return {
-        methyList: [],
         allGenes: [],
         options: [],
         // gene and cancer
         gene: 'APOE',
+        cnvList: [],
       }
     },
     methods: {
@@ -52,22 +52,25 @@
           this.options = [];
         }
       },
-      getMethyByGene() {
-        this.$http.get(this.api.dzxURL + '/methy/' + this.gene).then(res => {
-          this.methyList = res.data;
-          this.methyInit();
-          this.show = true;
-        })
+      // 拷贝数变异
+      getCnvData() {
+        let geneAndCancer = {cancer: '', gene: this.gene};
+        this.$http.post(this.api.reqURL + "/ana/general/cnv", geneAndCancer)
+          .then(res=>{
+            this.cnvList = res.data.data;
+            this.cnvInit();
+          })
       },
-      methyInit() {
+      // cnv初始化
+      cnvInit() {
         let data = [];
         let cancers = [];
-        for (let i = 0; i < this.methyList.length; i++) {
-          let methy = this.methyList[i];
-          data.push(methy.dataList);
-          cancers.push(methy.cancer);
+        for(let i = 0; i < this.cnvList.length; i++) {
+          let cnv = this.cnvList[i];
+          data.push(cnv.dataList);
+          cancers.push(cnv.cancer);
         }
-        this.$echarts.init(document.getElementById('methy')).setOption({
+        this.$echarts.init(document.getElementById('cnv')).setOption( {
             dataset: [
               {
                 source: data
@@ -75,8 +78,7 @@
               {
                 transform: {
                   type: 'boxplot',
-                  config: {
-                    itemNameFormatter: function (param) {
+                  config: { itemNameFormatter: function (param) {
                       return cancers[param.value];
                     }
                   }
@@ -101,7 +103,7 @@
             xAxis: {
               type: 'category',
 
-              axisLabel: {
+              axisLabel:{
                 interval: 0,
                 formatter: function (value) {
                   //x轴的文字改为竖版显示
@@ -112,6 +114,7 @@
             },
             yAxis: {
               type: 'value',
+              name: 'Copy Number Variance',
               splitArea: {
                 show: true
               }

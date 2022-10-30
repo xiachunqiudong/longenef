@@ -24,9 +24,6 @@
             </el-option>
           </el-select>
         </div>
-          <el-form-item>
-            <el-button type="primary" @click="queryByGeneAndCancer">Search</el-button>
-          </el-form-item>
         <el-divider></el-divider>
         <!--结果展示-->
         <!--diffR-->

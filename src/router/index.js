@@ -3,9 +3,8 @@ import Router from 'vue-router'
 import GeneManager from "../views/GeneManager";
 import Search from "../components/Search";
 import Browser from "../components/Browser";
-import Ana from "../components/Ana"
 import Contact from "../components/Contact";
-
+import Analysis from "../components/Analysis";
 
 Vue.use(Router)
 
@@ -32,7 +31,7 @@ const routes = [
   },
   {
     path: '/ana',
-    component: Ana
+    component: Analysis
   },
   {
     path: '/contact',
