@@ -9,7 +9,7 @@
         remote
         placeholder="please enter gene symbol"
         :remote-method="remoteMethod"
-        @change="getMethyByGene"
+        @change="getCnvData"
       >
         <!-- remote-method封装好的钩子函数。当用户在输入框中输入内容的时候，会触发这个函数的执行，
         把输入框对应的值作为参数带给回调函数，loading的意思就是远程搜索的时候等待的时间，即：加载中-->
@@ -23,7 +23,7 @@
       <el-button type="primary" @click="getCnvData">Click</el-button>
     </div>
     <el-divider></el-divider>
-    <div style="width: auto;height: 500px" id="cnv" class="chart"></div>
+    <div style="width: auto;height: 500px" id="cnv" class="chart" v-loading="loading"></div>
   </div>
 </template>
 
@@ -37,6 +37,7 @@
         // gene and cancer
         gene: 'APOE',
         cnvList: [],
+        loading: false
       }
     },
     methods: {
@@ -54,11 +55,12 @@
       },
       // 拷贝数变异
       getCnvData() {
-        let geneAndCancer = {cancer: '', gene: this.gene};
-        this.$http.post(this.api.reqURL + "/ana/general/cnv", geneAndCancer)
+        this.loading = true;
+        this.$http.get(this.api.dzxURL + '/cnv/' + this.gene)
           .then(res=>{
-            this.cnvList = res.data.data;
+            this.cnvList = res.data;
             this.cnvInit();
+            this.loading = false;
           })
       },
       // cnv初始化

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-tabs @tab-click="handleClick" type="border-card" style="border-color: #3a8ee6; border-width: 2px">
+    <el-tabs type="border-card" style="border-color: #3a8ee6; border-width: 2px">
       <el-tab-pane label="mRNA Expression">
         <DiffR></DiffR>
       </el-tab-pane>
@@ -31,9 +31,6 @@
       Cnv
     },
     methods: {
-      handleClick() {
-        this.refs.getMethyByGene();
-      }
     },
   }
 </script>
