@@ -53,10 +53,9 @@
         }
       },
       logfcAndMut() {
-        let geneAndCancer = {cancer: '', gene: this.gene};
-        this.$http.post(this.api.reqURL + "/ana/general/logfcAndMut", geneAndCancer)
+        this.$http.get(this.api.dzxURL + "/mut/" + this.gene)
           .then(res => {
-            this.logfcAndMutData = res.data.data;
+            this.logfcAndMutData = res.data;
             this.mutInit();
           })
       },

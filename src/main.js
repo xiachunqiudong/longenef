@@ -14,7 +14,7 @@ Vue.use(ElementUI)
 Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
-
+axios.defaults.baseURL = api_.baseURL
 Vue.prototype.$http = axios
 Vue.prototype.api = api_
 /* eslint-disable no-new */

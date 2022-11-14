@@ -15,7 +15,8 @@
              text-color="#0056AB"
              active-text-color="#F56C6C"
              background-color="#D1E8FF"
-             id="elMenu">
+             id="elMenu"
+    >
 <!--      <el-menu-item>
         <span style="font-size: 25px">LongevityGene-CancerDB</span>
       </el-menu-item>-->
@@ -60,12 +61,15 @@
 
 <script>
   import logo from './assets/logo.png'
+  import logo2 from  './assets/logo2.png'
+  import l1 from './assets/results/lunbo/l1.jpeg'
   export default {
     name: 'App',
     data() {
       return {
         activeIndex: this.$router.path,
         logo: logo,
+        l1: l1,
       };
     },
     methods: {
@@ -79,7 +83,7 @@
 
 <style>
   #mainContent {
-    max-width: 1300px;
+    max-width: 1400px;
     min-width: 600px;
     margin: auto;
   }

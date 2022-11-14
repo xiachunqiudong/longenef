@@ -1,5 +1,7 @@
-const reqURL  = 'http://124.223.81.224:8868';
-const baseURL = 'http://localhost:8800'
+// http://localhost:8800
+// 47.97.192.100:83
+// /shujupan/qd/longenef
+const baseURL = 'http://47.97.192.100:83'
 const xdlURL  = baseURL + '/xdl';
 const dzxURL  = baseURL + '/dzx';
 const rURL    = baseURL + '/r';
@@ -38,7 +40,6 @@ const cancers = [
   ]
 
 export default {
-  reqURL,
   dzxURL,
   xdlURL,
   rURL,

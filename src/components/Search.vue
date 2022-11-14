@@ -24,7 +24,7 @@
           </el-select>
         </div>
       </div>
-      <el-empty :image-size="200" description="wait for your search" v-show="empShow"></el-empty>
+      <el-empty :image-size="300" description="wait for your search" v-show="empShow"></el-empty>
       <Result ref="result"></Result>
     </el-card>
   </div>

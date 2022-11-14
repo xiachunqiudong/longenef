@@ -25,14 +25,18 @@
     <el-divider></el-divider>
     <el-empty description="Wait For Your Click" v-show="!show" style="height: 600px"></el-empty>
     <div v-loading="loading" v-show="show">
+
       <!--mRNA表达图片-->
       <el-image
         style=" height: 600px; width: 1250px"
         :src="'data:image/png;base64,' + img64"
         fit="contain">
       </el-image>
+      <br>
       <el-button type="primary" round @click="downloadDiffImg">Download</el-button>
+
       <el-divider></el-divider>
+
       <!--mRNA差异表达数据-->
       <el-table
         :stripe="true"
@@ -63,6 +67,7 @@
       </el-table>
       <br>
       <el-button type="primary" round @click="downloadDiffData">Download</el-button>
+      <br>
     </div>
   </div>
 </template>
@@ -78,7 +83,7 @@
         // gene and cancer
         gene: 'APOE',
         img64: "",
-        loading: true,
+        loading: false,
         diffList: [],
       }
     },
@@ -87,27 +92,25 @@
       remoteMethod(query) {
         // 如果用户输入内容了，就发请求拿数据，远程搜索模糊查询
         if (query !== "") {
-          this.loading = true; // 开始拿数据喽
           this.options = this.allGenes.filter((item) => {
             // 大于-1说明只要有就行，不论是不是开头也好，中间也好，或者结尾也好
             return item.toLowerCase().indexOf(query.toLowerCase()) > -1
           })
-          this.loading = false // 拿到数据喽
         } else {
           this.options = [];
         }
       },
       // 获取基因表达水平图
       getDiffPic() {
-        this.img64 = "";
+        this.show = true;
         this.loading = true;
+        this.img64 = "";
         this.$http.get(this.api.rURL + "/diffpic/" + this.gene).then(res => {
           this.img64 = res.data;
           this.$http.get(this.api.dzxURL + "/diff/" + this.gene).then(res => {
             this.diffList = res.data;
           });
           this.loading = false;
-          this.show = true;
         });
       },
       downloadDiffImg() {
@@ -128,7 +131,6 @@
       this.$http.get(this.api.xdlURL + '/long/gene/all').then(res => {
         this.allGenes = res.data;
       });
-      // this.getDiffPic();
     }
   }
 </script>

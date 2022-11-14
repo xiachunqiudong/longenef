@@ -1,29 +1,33 @@
 <template>
   <div>
     <!--轮播图-->
-    <el-carousel indicator-position="outside" height="500px">
-      <el-carousel-item v-for="item in 4" :key="item">
+    <el-carousel indicator-position="outside" height="400px">
+      <el-carousel-item v-for="l in ls" :key="l">
         <h3>
-          <el-image :src="src"></el-image>
+          <el-image
+            style="height: 700px"
+            :src="l"
+            fit="cover">
+          </el-image>
         </h3>
       </el-carousel-item>
     </el-carousel>
 
     <div style="margin-top: 50px">
       <div class="first-card-header main-color">
-        <span class="first-font">LongevityGene-CancerDB</span>
+        <span class="first-font">INTRODUCE</span>
       </div>
       <el-card class="first-card" shadow="never">
         <div class="text item">
           <!--介绍部分-->
           <div>
             <h2 style="text-align: center">Welcome to Longivity And Cancer Online Analysis Database</h2>
-            <p>
+            <p style="font-size: 20px">
               Longevity has always been a sought-after goal, and the risk of cancer increases with age.
               The association between longevity genes and cancer is still unclear.
               This database is dedicated to find the association between longevity genes and cancer.
             </p>
-            <p>
+            <p style="font-size: 20px">
               One of the important questions in aging research is how differences in transcriptomics are associated with
               the longevity of various species. Unfortunately,
               at the level of individual genes, the links between expression in different organs and maximum lifespan
@@ -48,33 +52,52 @@
 
     <div style="margin-top: 50px">
       <div class="first-card-header">
-        <span class="first-font">Results</span>
+        <span class="first-font">RESULTS</span>
       </div>
-      <el-card class="first-card" shadow="never">
-        <div class="text item">
-          <!--结果展示-->
-          <el-image
-            style="width: 1200px; height: 800px"
-            :src="survImg"
-            :fit="scale-down"></el-image>
-        </div>
-      </el-card>
+      <el-image
+        class="result"
+        :src="f3"
+        style="width: 1380px"
+        :fit="scale-down">
+      </el-image>
+      <div class="text item" style="text-align: center">
+        <!--结果展示-->
+        <el-image
+          class="result"
+          :src="f1"
+          :fit="scale-down">
+        </el-image>
+        <el-image
+          class="result"
+          :src="f2"
+          :fit="scale-down">
+        </el-image>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-
-  import surv from "../assets/home/surv.png"
-  import gene from  "../assets/home/gene.jpg"
+  // 轮播图
+  import gene from '../assets/results/lunbo/gene.jpg'
+  import l1 from '../assets/results/lunbo/l1.jpeg'
+  // 结果图
+  import f1 from '../assets/results/f1.jpg'
+  import f2 from '../assets/results/f2.png'
+  import f3 from '../assets/results/f1.png'
 
   export default {
     name: "Index",
     data() {
       return {
         overview: {},
-        survImg: surv,
-        src: gene,
+        // 轮播图
+        ls: [gene, l1],
+        // 结果展示
+        f1: f1,
+        f2: f2,
+        f3: f3,
+        res: [f1, f2],
       }
     },
     methods: {
@@ -110,22 +133,18 @@
     text-align: center;
   }
 
-
   /*轮播图*/
   .el-carousel__item h3 {
     color: #475669;
     font-size: 18px;
-    opacity: 0.75;
     line-height: 300px;
     margin: 0;
   }
 
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
-
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
+  .result {
+    height: 875px;
+    margin: 5px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   }
 
 </style>
