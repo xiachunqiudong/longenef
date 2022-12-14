@@ -56,6 +56,7 @@
       // 拷贝数变异
       getCnvData() {
         this.loading = true;
+        this.$http.get(this.api.xdlURL + "/long/gene/addview/" + this.gene);
         this.$http.get(this.api.dzxURL + '/cnv/' + this.gene)
           .then(res=>{
             this.cnvList = res.data;

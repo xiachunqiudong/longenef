@@ -5,10 +5,10 @@
         <DiffR></DiffR>
       </el-tab-pane>
       <el-tab-pane label="Survival">
-        <DiffR></DiffR>
+        <Surv></Surv>
       </el-tab-pane>
-      <el-tab-pane label="Method">
-        <DiffR></DiffR>
+      <el-tab-pane label="ssGSEA">
+        <GSEA></GSEA>
       </el-tab-pane>
       <el-tab-pane label="DNA Methylation">
         <methy ref="methy"></methy>
@@ -22,28 +22,28 @@
       <el-tab-pane label="Method">
         <Method></Method>
       </el-tab-pane>
-      <el-tab-pane label="Test">
-        <Test></Test>
-      </el-tab-pane>
+
     </el-tabs>
   </div>
 </template>
 
 <script>
   import DiffR from "./dzx/DiffR";
+  import Surv from "./dzx/Surv";
   import Methy from "./dzx/Methy";
   import Mut from "./dzx/Mut";
   import Cnv from "./dzx/Cnv";
-  import Test from "./dzx/Test";
+  import GSEA from "./dzx/GSEA";
   import Method from "./dzx/Method";
   export default {
     name: "Analysis",
     components: {
       DiffR,
+      Surv,
       Methy,
       Mut,
       Cnv,
-      Test,
+      GSEA,
       Method
     },
     methods: {

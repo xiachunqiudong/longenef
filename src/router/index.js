@@ -5,6 +5,7 @@ import Search from "../components/Search";
 import Browser from "../components/Browser";
 import Contact from "../components/Contact";
 import Analysis from "../components/Analysis";
+import Help from "../components/Help";
 
 Vue.use(Router)
 
@@ -32,6 +33,10 @@ const routes = [
   {
     path: '/ana',
     component: Analysis
+  },
+  {
+    path: '/help',
+    component: Help
   },
   {
     path: '/contact',

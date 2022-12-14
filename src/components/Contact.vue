@@ -2,9 +2,9 @@
   <div>
     <el-card class="box-card">
       <div style="text-align: center">
-        <span style="font-size: 30px">Contact Information</span>
+        <span style="font-size: 28px">Contact Information</span>
       </div>
-      <hr>
+      <el-divider></el-divider>
       <p>
         Department of Bioinformatics, Smart Health Big Data Analysis and Location Services Engineering Lab of Jiangsu
         Province, School of Geographic and Biologic Information, Nanjing University of Posts and Telecommunications
@@ -21,9 +21,9 @@
     </el-card>
     <el-card class="box-card">
       <div style="text-align: center">
-        <span style="font-size: 30px">Copyright ©</span>
+        <span style="font-size: 28px">Copyright ©</span>
       </div>
-      <hr>
+      <el-divider></el-divider>
       <br>
       <el-link type="primary" :underline="false" style="font-size: 18px; margin-bottom: 30px" href="http://cgb.njupt.edu.cn/">
         Guo Lab, School of Geographic and Biologic Information, Nanjing University of Posts and Telecommunications, Nanjing, China.
@@ -42,12 +42,9 @@
 
 <style scoped>
   .box-card {
-    margin-top: 50px;
-    border-width: 1px;
-    border-color: #333745;
+    margin-top: 100px;
+    border-width: 2px;
+    border-color: #3a8ee6;
   }
 
-  .clearfix {
-    text-align: center;
-  }
 </style>

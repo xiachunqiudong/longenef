@@ -10,6 +10,16 @@
             inactive-color="#ff4949">
           </el-switch>
         </el-form-item>
+        <el-form-item label="Cancer">
+          <el-select v-model="cancer" filterable placeholder="Cancer">
+            <el-option
+              v-for="cancer in cancers"
+              :key="cancer"
+              :label="cancer"
+              :value="cancer">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <!--all gene-->
         <el-form-item label="Gene" v-show="allGene">
           <el-input v-model="gene" placeholder="please enter gene symbol"></el-input>
@@ -33,55 +43,21 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-button type="primary" @click="getDiffPic">Click</el-button>
+        <el-button type="primary" @click="getPic">Click</el-button>
       </el-form>
     </div>
-
+    <!--结果展示模块-->
     <el-divider></el-divider>
     <el-empty description="Wait For Your Click" v-show="!show" style="height: 600px"></el-empty>
     <div v-loading="loading" v-show="show">
-      <!--mRNA表达图片-->
+      <!--Surv-->
       <el-image
-        style=" height: 600px; width: 1250px"
+        style=" height: 800px;"
         :src="'data:image/png;base64,' + img64"
         fit="contain">
       </el-image>
       <br>
-      <el-button type="primary" round @click="downloadDiffImg">Download</el-button>
-
-      <el-divider></el-divider>
-
-      <!--mRNA差异表达数据-->
-      <el-table
-        :stripe="true"
-        :data="diffList"
-        height="500"
-        border
-        style="width: 100%;">
-        <el-table-column
-          prop="gene"
-          label="Gene">
-        </el-table-column>
-        <el-table-column
-          prop="cancerType"
-          label="Cancer Type">
-        </el-table-column>
-        <el-table-column
-          prop="logFC"
-          label="logFC">
-        </el-table-column>
-        <el-table-column
-          prop="aveExpr"
-          label="AveExpr">
-        </el-table-column>
-        <el-table-column
-          prop="adjP"
-          label="Adj.P">
-        </el-table-column>
-      </el-table>
-      <br>
-      <el-button type="primary" round @click="downloadDiffData">Download</el-button>
-      <br>
+      <el-button type="primary" round @click="downloadImg">Download</el-button>
     </div>
   </div>
 </template>
@@ -96,10 +72,11 @@
         options: [],
         // gene and cancer
         gene: 'APOE',
+        cancer: 'BLCA',
         img64: "",
         loading: false,
-        diffList: [],
-        allGene: false,
+        cancers: [],
+        allGene: false
       }
     },
     methods: {
@@ -115,30 +92,20 @@
           this.options = [];
         }
       },
-      // 获取基因表达水平图
-      getDiffPic() {
+      getPic() {
         this.$http.get(this.api.xdlURL + "/long/gene/addview/" + this.gene);
         this.show = true;
         this.loading = true;
         this.img64 = "";
-        this.$http.get(this.api.rURL + "/diffpic/" + this.gene).then(res => {
+        this.$http.get(this.api.rURL + "/surv/" + this.gene + "/" + this.cancer).then(res => {
           this.img64 = res.data;
-          this.$http.get(this.api.dzxURL + "/diff/" + this.gene).then(res => {
-            this.diffList = res.data;
-          });
           this.loading = false;
         });
       },
-      downloadDiffImg() {
-        let imgHref = this.api.dzxURL + "/diff/down/img/" + this.gene;
+      downloadImg() {
+        let imgHref = this.api.dzxURL + "/down/surv/" + this.gene + "/" + this.cancer;
         let a = document.createElement('a');
         a.href = imgHref;
-        a.click();
-      },
-      downloadDiffData() {
-        let dataHref = this.api.dzxURL + "/diff/down/data/" + this.gene;
-        let a = document.createElement('a');
-        a.href = dataHref;
         a.click();
       },
     },
@@ -147,6 +114,10 @@
       this.$http.get(this.api.xdlURL + '/long/gene/all').then(res => {
         this.allGenes = res.data;
       });
+      this.cancers = ["BLCA", "BRCA", "CHOL", "COAD", "ESCA",
+        "HNSC", "KICH", "KIRC", "KIRP", "LIHC",
+        "LUAD", "LUSC", "PRAD", "READ", "STAD",
+        "THCA", "UCEC"];
     }
   }
 </script>

@@ -53,6 +53,7 @@
         }
       },
       getMethyByGene() {
+        this.$http.get(this.api.xdlURL + "/long/gene/addview/" + this.gene);
         this.$http.get(this.api.dzxURL + '/methy/' + this.gene).then(res => {
           this.methyList = res.data;
           this.methyInit();

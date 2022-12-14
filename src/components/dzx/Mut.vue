@@ -53,6 +53,7 @@
         }
       },
       logfcAndMut() {
+        this.$http.get(this.api.xdlURL + "/long/gene/addview/" + this.gene);
         this.$http.get(this.api.dzxURL + "/mut/" + this.gene)
           .then(res => {
             this.logfcAndMutData = res.data;

@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <!--logo-->
-    <el-image
-      style="height: 100px"
-      :src="logo"
-      fit="fit">
-    </el-image>
-    <br>
+    <div style="background-color: #D1E8FF">
+      <!--logo-->
+      <el-image
+        style="height: 100px"
+        :src="logo"
+        fit="fit">
+      </el-image>
+    </div>
     <!--导航菜单-->
     <el-menu :default-active="activeIndex"
              mode="horizontal"
@@ -36,6 +37,10 @@
       <el-menu-item index="/ana">
         <i class="el-icon-s-marketing"></i><span class="nav-font">Analysis</span>
       </el-menu-item>
+      <!--Help-->
+      <el-menu-item index="/help">
+        <i class="el-icon-s-marketing"></i><span class="nav-font">Help</span>
+      </el-menu-item>
       <!--Contact us-->
       <el-menu-item index="/contact">
         <i class="el-icon-phone"></i><span class="nav-font">Contact us</span>
@@ -61,7 +66,6 @@
 
 <script>
   import logo from './assets/logo.png'
-  import logo2 from  './assets/logo2.png'
   import l1 from './assets/results/lunbo/l1.jpeg'
   export default {
     name: 'App',

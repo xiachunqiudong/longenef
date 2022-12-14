@@ -80,6 +80,7 @@ export default {
       this.gene = gene;
       this.dialogVisible = true;
       this.$refs.result.getGeneInfo(gene);
+      this.$http.get(this.api.xdlURL + "/long/gene/addview/" + gene);
     },
     findPage(page) {
       this.pageNow = page;

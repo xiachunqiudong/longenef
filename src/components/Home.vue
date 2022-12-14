@@ -1,27 +1,15 @@
 <template>
   <div>
-    <!--轮播图-->
-    <el-carousel indicator-position="outside" height="400px">
-      <el-carousel-item v-for="l in ls" :key="l">
-        <h3>
-          <el-image
-            style="height: 700px"
-            :src="l"
-            fit="cover">
-          </el-image>
-        </h3>
-      </el-carousel-item>
-    </el-carousel>
-
+    <Intro></Intro>
+    <!--介绍部分-->
     <div style="margin-top: 50px">
       <div class="first-card-header main-color">
         <span class="first-font">INTRODUCE</span>
       </div>
       <el-card class="first-card" shadow="never">
         <div class="text item">
-          <!--介绍部分-->
           <div>
-            <h2 style="text-align: center">Welcome to Longivity And Cancer Online Analysis Database</h2>
+            <h2 style="text-align: center">Welcome to the Longevity And Cancer Online Analysis Database!</h2>
             <p style="font-size: 20px">
               Longevity has always been a sought-after goal, and the risk of cancer increases with age.
               The association between longevity genes and cancer is still unclear.
@@ -50,6 +38,53 @@
       </el-card>
     </div>
 
+    <!--overview-->
+    <div style="margin-top: 50px">
+      <div class="first-card-header main-color">
+        <span class="first-font">OVERVIEW</span>
+      </div>
+      <el-card class="first-card" shadow="never">
+        <el-row :gutter="40">
+          <el-col span="14">
+            <el-card class="box-card">
+              <div slot="header">
+                <span style="font-size: 25px">Statistics</span>
+              </div>
+              <h4>Number of longevity genes : {{overview.ngene}}</h4>
+              <h4>Number of cancers : {{overview.ncancer}}</h4>
+              <h4>Number of samples : {{overview.nsample}}</h4>
+            </el-card>
+          </el-col>
+          <el-col span="10">
+            <el-card class="box-card">
+              <div slot="header">
+                <span style="font-size: 25px">Hot Longevity Genes</span>
+              </div>
+              <el-table
+                :data="geneRank"
+                style="width: 100%">
+                <el-table-column
+                  type="index"
+                  width="100"
+                >
+                </el-table-column>
+                <el-table-column
+                  prop="gene"
+                  label="Gene"
+                  width="200">
+                </el-table-column>
+                <el-table-column
+                  prop="view"
+                  label="View"
+                  width="200">
+                </el-table-column>
+              </el-table>
+            </el-card>
+          </el-col>
+        </el-row>
+      </el-card>
+    </div>
+    <!--RESULT-->
     <div style="margin-top: 50px">
       <div class="first-card-header">
         <span class="first-font">RESULTS</span>
@@ -85,14 +120,21 @@
   import f1 from '../assets/results/f1.jpg'
   import f2 from '../assets/results/f2.png'
   import f3 from '../assets/results/f1.png'
+  import Intro from "./home/Intro";
 
   export default {
     name: "Index",
+    components: {
+      Intro
+    },
     data() {
       return {
-        overview: {},
-        // 轮播图
-        ls: [gene, l1],
+        overview: {
+          ngene: 360,
+          ncancer: 1000,
+          nsample: 1000,
+        },
+        geneRank: [],
         // 结果展示
         f1: f1,
         f2: f2,
@@ -101,16 +143,21 @@
       }
     },
     methods: {
-      getOverView() {
-        this.$http.get(this.api.reqURL + "/index/gene/overview").then(res => {
-          console.log(res.data.data);
-          this.overview = res.data.data;
+      getGeneRank() {
+        this.$http.get(this.api.xdlURL + "/long/gene/all/rank").then(res => {
+          this.geneRank = res.data;
         })
-      }
+      },
+      ov() {
+        this.$http.get(this.api.xdlURL + "/long/ov").then(res => {
+          this.overview = res.data;
+        })
+      },
     },
     created() {
-      this.getOverView();
-    }
+      this.getGeneRank();
+      this.ov();
+    },
   }
 </script>
 

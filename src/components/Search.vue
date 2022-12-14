@@ -55,6 +55,7 @@
       GeneSearch() {
         this.empShow = false;
         this.$refs.result.getGeneInfo(this.gene);
+        this.$http.get(this.api.xdlURL + "/long/gene/addview/" + this.gene);
       },
       remoteMethod(query) {
         // 如果用户输入内容了，就发请求拿数据，远程搜索模糊查询
