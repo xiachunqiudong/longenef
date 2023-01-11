@@ -2,11 +2,11 @@
   <div id="app">
     <div style="background-color: #D1E8FF">
       <!--logo-->
-      <el-image
+<!--      <el-image
         style="height: 100px"
         :src="logo"
         fit="fit">
-      </el-image>
+      </el-image>-->
     </div>
     <!--导航菜单-->
     <el-menu :default-active="activeIndex"
@@ -16,13 +16,12 @@
              text-color="#0056AB"
              active-text-color="#F56C6C"
              background-color="#D1E8FF"
-             id="elMenu"
-    >
-<!--      <el-menu-item>
-        <span style="font-size: 25px">LongevityGene-CancerDB</span>
-      </el-menu-item>-->
+             id="elMenu">
+      <el-menu-item>
+        <span style="font-size: 30px; font-family: 'italic 2em Georgia, serif'">LongevityGene-Cancer DB</span>
+      </el-menu-item>
       <!--Home-->
-      <el-menu-item index="/home" style="margin-left:350px">
+      <el-menu-item index="/home" style="margin-left:200px">
         <i class="el-icon-s-home"></i><span class="nav-font">Home</span>
       </el-menu-item>
       <!--Browser-->
@@ -39,7 +38,7 @@
       </el-menu-item>
       <!--Help-->
       <el-menu-item index="/help">
-        <i class="el-icon-s-marketing"></i><span class="nav-font">Help</span>
+        <i class="el-icon-info"></i><span class="nav-font">Help</span>
       </el-menu-item>
       <!--Contact us-->
       <el-menu-item index="/contact">
@@ -66,14 +65,12 @@
 
 <script>
   import logo from './assets/logo.png'
-  import l1 from './assets/results/lunbo/l1.jpeg'
   export default {
     name: 'App',
     data() {
       return {
         activeIndex: this.$router.path,
         logo: logo,
-        l1: l1,
       };
     },
     methods: {

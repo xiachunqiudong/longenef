@@ -88,6 +88,17 @@
                 fromTransformResult: 1
               }
             ],
+            title: [
+              {
+                text: 'DNA Methylation',
+                left: 'center'
+              },
+              {
+                text: 'Cancer Type',
+                left: 'center',
+                top: '95%'
+              }
+            ],
             tooltip: {
               trigger: 'item',
               axisPointer: {
@@ -97,22 +108,20 @@
             grid: {
               left: '10%',
               right: '10%',
-              bottom: '15%'
+              bottom: '10%'
             },
             xAxis: {
               type: 'category',
-
+              name: 'Cancer Type',
               axisLabel: {
                 interval: 0,
-                formatter: function (value) {
-                  //x轴的文字改为竖版显示
-                  var str = value.split("");
-                  return str.join("\n");
-                }
+                rotate: 40
               }
             },
             yAxis: {
               type: 'value',
+              name: 'DNA Methylation',
+              show: true,
               splitArea: {
                 show: true
               }
@@ -122,7 +131,6 @@
                 name: 'boxplot',
                 type: 'boxplot',
                 datasetIndex: 1,
-                with: '50%',
               },
               {
                 name: 'outlier',

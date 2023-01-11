@@ -23,7 +23,7 @@
       <el-button type="primary" @click="getCnvData">Click</el-button>
     </div>
     <el-divider></el-divider>
-    <div style="width: auto;height: 500px" id="cnv" class="chart" v-loading="loading"></div>
+    <div style="width: auto;height: 600px" id="cnv" class="chart" v-loading="loading"></div>
   </div>
 </template>
 
@@ -103,24 +103,29 @@
               right: '10%',
               bottom: '15%'
             },
+            title: [
+              {
+                text: 'CNV',
+                left: 'center'
+              },
+              {
+                text: 'Cancer Type',
+                left: 'center',
+                top: '95%'
+              }
+            ],
             xAxis: {
               type: 'category',
-
-              axisLabel:{
+              position: 'bottom',
+              show: true,
+              axisLabel: {
                 interval: 0,
-                formatter: function (value) {
-                  //x轴的文字改为竖版显示
-                  var str = value.split("");
-                  return str.join("\n");
-                }
+                rotate: 40
               }
             },
             yAxis: {
               type: 'value',
               name: 'Copy Number Variance',
-              splitArea: {
-                show: true
-              }
             },
             series: [
               {

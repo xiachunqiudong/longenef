@@ -39,14 +39,18 @@
 </template>
 
 <script>
-  import f1 from "../../assets/intro/1.png"
-  import f2 from "../../assets/intro/2.png"
+  import f1_a from "../../assets/figure1/a.png"
+  import f1_b from "../../assets/figure1/b.png"
+  import f1_c from "../../assets/figure1/c.png"
+  import f1_d from "../../assets/figure1/d.png"
+  import f1_e from "../../assets/figure1/e.png"
+  import f1_f from "../../assets/figure1/f.png"
 
   export default {
     name: "Intro",
     data() {
       return {
-        imgs: [f1, f2],
+        imgs: [f1_a, f1_b, f1_c, f1_d, f1_e, f1_f],
       }
     },
   }
